@@ -5,10 +5,11 @@
       <!--
         AdobePdfViewer 使用說明：
         1. clientId 已自動從 runtimeConfig 取得
-        2. pdfUrl 可傳入 /sample.pdf 或其他公開 PDF 路徑
+        2. pdfId 為 private-files 資料夾內的 pdf 檔名 (不含 .pdf)
       -->
       <AdobePdfViewer
         :clientId="clientId"
+        pdfId="sample"
       />
     </client-only>
     <NuxtRouteAnnouncer />

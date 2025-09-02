@@ -10,6 +10,7 @@ import { useAdobePdfEmbed } from '~/composables/useAdobePdfEmbed'
 
 const props = defineProps<{
   clientId: string // Adobe PDF Embed API Client ID
+  pdfId: string // 要載入的 PDF 檔案識別碼 (不含 .pdf)
 }>()
 
 const { loadSdk } = useAdobePdfEmbed()
@@ -17,37 +18,37 @@ const { loadSdk } = useAdobePdfEmbed()
 let adobeDCView: any = null
 
 /**
- * 透過後端 API 安全地取得 PDF 檔案內容
+ * 透過公開的代理 API 取得 PDF 檔案內容
  * @returns Promise<ArrayBuffer>
  */
 function fetchPdfSecurely(): Promise<ArrayBuffer> {
-  // 呼叫我們建立的後端 API
-  return fetch('/api/pdf')
+  // 呼叫新的、公開的代理 API，這個請求不包含任何金鑰
+  return fetch(`/api/viewer/${props.pdfId}`)
     .then(res => {
       if (!res.ok) {
-        throw new Error('Failed to fetch PDF');
+        throw new Error(`Failed to fetch PDF: ${res.statusText}`)
       }
-      return res.arrayBuffer();
-    });
+      return res.arrayBuffer()
+    })
 }
 
 function renderPdf() {
   const viewerDiv = document.getElementById('adobe-pdf-viewer')
   if (viewerDiv) viewerDiv.innerHTML = ''
 
-  const pdfPromise = fetchPdfSecurely();
+  const pdfPromise = fetchPdfSecurely()
 
   // @ts-ignore
   adobeDCView = new window.AdobeDC.View({
     clientId: props.clientId,
-    divId: 'adobe-pdf-viewer'
+    divId: 'adobe-pdf-viewer',
   })
 
   // 修改嵌入模式為 FULL_WINDOW，確保工具列固定顯示
   adobeDCView.previewFile(
     {
       content: { promise: pdfPromise },
-      metaData: { fileName: 'sample.pdf' } // 這裡的檔名僅供顯示
+      metaData: { fileName: `${props.pdfId}.pdf` }, // 這裡的檔名僅供顯示
     },
     {
       embedMode: 'FULL_WINDOW',
