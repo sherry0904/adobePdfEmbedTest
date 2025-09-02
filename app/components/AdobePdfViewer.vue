@@ -43,16 +43,18 @@ function renderPdf() {
     divId: 'adobe-pdf-viewer'
   })
 
-  // 將 Promise 直接傳遞給 previewFile
+  // 修改嵌入模式為 FULL_WINDOW，確保工具列固定顯示
   adobeDCView.previewFile(
     {
       content: { promise: pdfPromise },
       metaData: { fileName: 'sample.pdf' } // 這裡的檔名僅供顯示
     },
     {
-      embedMode: 'SIZED_CONTAINER',
-      showDownloadPDF: false, // 建議關閉 UI 上的下載按鈕
-      showPrintPDF: false, // 同時建議關閉列印按鈕
+      embedMode: 'FULL_WINDOW',
+      showDownloadPDF: false, // 禁止下載
+      showPrintPDF: false, // 禁止列印
+      showAnnotationTools: false, // 禁止編輯
+      enableTextSelection: true, // 允許選取文字內容
     }
   )
 }
