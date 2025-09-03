@@ -8,4 +8,14 @@ export default defineNuxtConfig({
       pdfEmbedClientId: process.env.PDF_EMBED_CLIENT_ID,
     },
   },
+  nitro: {
+    routeRules: {
+      '/': {
+        headers: {
+          'Content-Security-Policy': "script-src 'self' https://documentcloud.adobe.com;"
+        }
+      }
+    },
+    includeFiles: ['private-files/**'],
+  }
 })
