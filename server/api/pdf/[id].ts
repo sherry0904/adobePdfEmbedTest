@@ -29,8 +29,8 @@ export default defineEventHandler(async (event) => {
 
   // 安全性：防止路徑遍歷攻擊 (Path Traversal)
   const safePdfId = path.basename(pdfId)
-  // 用 process.cwd() 取得專案根目錄，確保 Vercel serverless function 路徑正確
-  const filePath = path.join(process.cwd(), 'private-files', `${safePdfId}.pdf`)
+  // 改為存取 public 資料夾進行測試
+  const filePath = path.join(process.cwd(), 'public', `${safePdfId}.pdf`)
 
   // log 實際檔案路徑，方便 Vercel 部署時追蹤
   console.log('PDF file path:', filePath)
