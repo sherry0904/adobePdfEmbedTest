@@ -8,21 +8,21 @@ export default defineEventHandler(async (event) => {
   const host = getRequestHeader(event, 'host')
 
   // 如果有 referer，檢查它是否來自同一個網站
-  if (referer) {
-    const refererHost = new URL(referer).host
-    if (refererHost !== host) {
-      throw createError({
-        statusCode: 403,
-        statusMessage: 'Forbidden: Hotlinking is not allowed.',
-      })
-    }
-  } else {
-    // 如果沒有 referer (例如直接在瀏覽器開啟)，也直接阻擋
-    throw createError({
-      statusCode: 403,
-      statusMessage: 'Forbidden: Direct access is not allowed.',
-    })
-  }
+  // if (referer) {
+  //   const refererHost = new URL(referer).host
+  //   if (refererHost !== host) {
+  //     throw createError({
+  //       statusCode: 403,
+  //       statusMessage: 'Forbidden: Hotlinking is not allowed.',
+  //     })
+  //   }
+  // } else {
+  //   // 如果沒有 referer (例如直接在瀏覽器開啟)，也直接阻擋
+  //   throw createError({
+  //     statusCode: 403,
+  //     statusMessage: 'Forbidden: Direct access is not allowed.',
+  //   })
+  // }
   // --- End of Referer Check ---
 
   const config = useRuntimeConfig(event)
