@@ -9,13 +9,13 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    routeRules: {
-      '/': {
-        headers: {
-          'Content-Security-Policy': "script-src 'self' https://documentcloud.adobe.com 'unsafe-inline';"
-        }
-      }
-    },
+    // routeRules: {
+    //   '/': {
+    //     headers: {
+    //       'Content-Security-Policy': "script-src 'self' https://documentcloud.adobe.com 'unsafe-inline';"
+    //     }
+    //   }
+    // },
     includeFiles: ['private-files/**'],
   }
 })
